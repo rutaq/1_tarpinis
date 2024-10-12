@@ -15,7 +15,7 @@ class Library:
         self.booklist = []
 
     # Turėtų būti galima pridėti naują į knygą į biblioteką
-    def add_book(self, books: list):
+    def add_book(self):
         author = input("Autorius: ")
         name = input("Knygos pavadinimas: ")
         pub_year = input("Leidimo metai: ")
@@ -23,7 +23,12 @@ class Library:
 
         book = Book(author,name,pub_year,genre)
         self.booklist.append(book)
-        print("Knyga sėkmingai pridėta į biblioteką.\n")
+        print("Knyga sėkmingai pridėta į biblioteką.")
+
+    def save_books(self, filename="lib_books.pickle"):
+        with open(filename, "wb") as f:
+            pickle.dump(self.booklist, f)
+        # print("Bibliotekos knygų sąrašas išsaugotas faile.")
 
     def load_books(self, filename="lib_books.pickle"):
         try:
