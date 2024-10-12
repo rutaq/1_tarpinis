@@ -10,7 +10,8 @@ while True:
         library.add_book()
         library.save_books()
     elif action == "2":
-        ...
+        library.remove_book()
+        library.save_books()
     elif action == "0":
         break
     else:
