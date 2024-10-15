@@ -7,12 +7,13 @@ class Book:
         self.name = name
         self.year = pub_year
         self.genre = genre
-        self.n = quantity
+        self.n = quantity if quantity is not None else 0
         self.isbn = isbn
         self.lib_id = lib_id  # Unikalus bibliotekos numeris, jei nėra ISBN
+        self.isbn_or_id = self.isbn if self.isbn else (self.lib_id if self.lib_id else "Neturi ID")
     
     def __str__(self):
-        return f'{self.author} "{self.name}", {self.year} ({self.genre})'
+        return f'{self.isbn_or_id}. {self.author} "{self.name}", {self.year} ({self.genre}) - {self.n} vnt.'
 class Library:
     def __init__(self):
         self.booklist = []
@@ -51,7 +52,6 @@ class Library:
         #     pickle.dump(self.booklist, f)
         with open(filename, "wb") as f:
             pickle.dump(self.booklist, f)
-        # print("Bibliotekos knygų sąrašas išsaugotas faile.")
 
     def load_books(self, filename="1_tarpinis/lists/lib_books.pickle"):
         # Nustatome absoliutų kelią pagal dabartinę failo vietą
@@ -100,3 +100,23 @@ class Library:
             # Jei return nebūtų, ciklas pereitų prie kitos knygos, net jei buvo rasta ir apdorota knyga.
         else:
             print(f"Knyga su nurodytu ISBN arba unikaliu bibliotekos numeriu '{id}' nerasta.")
+
+    # Turi būti galima peržiūrėti visas bibliotekos knygas
+    def show_books(self):
+        if not self.booklist:
+            print("Bibliotekoje šiuo metu nėra knygų.")
+        else:
+            # table_len = 108
+            # col_width = table_len/6
+            # formatavimas = f"|{{st1:^{col_width}}}|{{st2:^{col_width}}}|{{st3:^{col_width}}}|{{st4:^{col_width}}}|{{st5:^{col_width}}}|{{st6:^{col_width}}}|"
+            # st1, st2,st3,st4,st5,st6 = "Autorius","Pavadinimas","Leidimo metai","Žanras", "ISBN/Bibliotekos nr.","Kiekis"
+            # print("-" * table_len)
+            # print(formatavimas.format(st1=st1, st2=st2,st3=st3,st4=st4,st5=st5,st6=st6))
+            # print("-" * table_len)
+            # for book in self.booklist:
+            #     st1, st2, st3, st4, st5, st6 = (str(book.author), str(book.name), str(book.year), str(book.genre), str(book.isbn), str(book.n))
+            # print(formatavimas.format(st1=st1, st2=st2, st3=st3, st4=st4, st5=st5, st6=st6))
+            # print("-" * table_len)
+            print("BIBLIOTEKOJE ESANČIŲ KNYGŲ SĄRAŠAS")
+            for book in self.booklist:
+                print(book)
