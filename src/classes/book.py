@@ -14,6 +14,7 @@ class Book:
     
     def __str__(self):
         return f'{self.isbn_or_id}. {self.author} "{self.name}", {self.year} ({self.genre}) - {self.n} vnt.'
+    
 class Library:
     def __init__(self):
         self.booklist = []
