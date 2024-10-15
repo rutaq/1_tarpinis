@@ -71,7 +71,7 @@ class Library:
         id = input("Įveskite knygos ISBN arba bibliotekos numerį: ")
         for book in self.booklist:
             if book.isbn == id or book.lib_id == id:
-                print(f"Knyga rasta: {book.name}. Esamų egzempliorių kiekis: {book.n}")
+                print(f'Knyga rasta: "{book.name}". Esamų egzempliorių kiekis: {book.n}')
                 while True:
                     try:
                         remove_n = int(input(f"Įveskite kiekį, kurį norite pašalinti (maksimalus: {book.n}): "))
@@ -83,7 +83,7 @@ class Library:
                         print("Neteisinga įvestis. Prašome įvesti sveikąjį skaičių.")
                 
                 book.n -= remove_n
-                print(f"Pašalinta {remove_n} vnt. knygos '{book.name}'. Liko: {book.n} vnt.")
+                print(f'Pašalinta {remove_n} vnt. knygos "{book.name}". Liko: {book.n} vnt.')
                 
                 if book.n == 0:
                 # Būsimas funkcionalumas: patikrinti, ar nėra išduotų egzempliorių
@@ -120,3 +120,16 @@ class Library:
             print("BIBLIOTEKOJE ESANČIŲ KNYGŲ SĄRAŠAS")
             for book in self.booklist:
                 print(book)
+    
+    # Turėtų būti galimybė ieškoti knygų bibliotekoje, pagal knygos pavadinimą arba autorių.
+    def search_books(self, keyword):
+        results = []
+        for book in self.booklist:
+            if keyword.lower() in book.name.lower() or keyword.lower() in book.author.lower():
+                results.append(book)
+        if results:
+            print(f"Rasta(-os) knyga(-os) su '{keyword}':")
+            for book in results:
+                print(book)
+        else:
+            print(f"Nerasta knygų su '{keyword}'.\n")
