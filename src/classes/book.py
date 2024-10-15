@@ -13,7 +13,7 @@ class Book:
         self.isbn_or_id = self.isbn if self.isbn else (self.lib_id if self.lib_id else "Neturi ID")
     
     def __str__(self):
-        return f'{self.isbn_or_id}. {self.author} "{self.name}", {self.year} ({self.genre}) - {self.n} vnt.'
+        return f'{self.isbn_or_id}. {self.author} "{self.name}", {self.year} ({self.genre}) - {self.n} vnt.\n'
     
 class Library:
     def __init__(self):
@@ -55,15 +55,12 @@ class Library:
             pickle.dump(self.booklist, f)
 
     def load_books(self, filename="src/lists/lib_books.pickle"):
-        # Nustatome absoliutų kelią pagal dabartinę failo vietą
-        # project_root = Path(__file__).resolve().parent.parent  # Nustatome projekto šaknį
-        # filepath = project_root / "lists" / filename  # Sukuriame absoliutų kelią
         try:
             # with open(filepath, "rb") as f:
             #     self.booklist = pickle.load(f)
             with open(filename, "rb") as f:
                 self.booklist = pickle.load(f)
-            print("Bibliotekos knygų sąrašas pakrautas iš failo.")
+            # print("Bibliotekos knygų sąrašas pakrautas iš failo.")
         except (FileNotFoundError, EOFError):
             print("Failas nerastas arba tuščias.")
 
@@ -132,5 +129,7 @@ class Library:
             print(f"Rasta(-os) knyga(-os) su '{keyword}':")
             for book in results:
                 print(book)
+            return results
         else:
             print(f"Nerasta knygų su '{keyword}'.\n")
+            return None

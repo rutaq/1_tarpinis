@@ -1,5 +1,4 @@
 import pickle
-import datetime
 
 class Client:
 
@@ -8,9 +7,10 @@ class Client:
         self.surname = surname
         self.email = email
         self.card_id = None
+        self.borrowed_books = []
 
     def __str__(self):
-        return f"Kortelės ID: {self.card_id}. Skaitytojas: {self.name} {self.surname}, el. paštas: {self.email}"
+        return f"Kortelės ID: {self.card_id}. Skaitytojas: {self.name} {self.surname}, el. paštas: {self.email}\nPaimtos knygos:\n{self.borrowed_books}\n"
 
 class Readers:
     def __init__(self):
@@ -31,13 +31,17 @@ class Readers:
             print("Klientų failas nerastas arba tuščias, todėl inicijuotas jo sukūrimas.")
 
 # Knygas galima pasiimti tik su skaitytoje kortele, skaitytojo korteles reikia galėti užregistruoti ir priskirti naudotojui.
-    def add_client(self, name, surname, email):
-        add_client = Client(name, surname, email)
-        add_client.card_id = f"{self.current_card_id:07d}"
+    def add_client(self):
+        name = input("Įveskite vardą: ")
+        surname = input("Įveskite pavardę: ")
+        email = input("Įveskite el. paštą: ")
+        new_client = Client(name, surname, email)
+        new_client.card_id = f"{self.current_card_id:07d}"
         self.current_card_id += 1
-        self.readerlist.append(add_client)
+        self.readerlist.append(new_client)
         self.save_client()
-        print(f"Skaitytojas užregistruotas: {add_client}")
+        print(f"Skaitytojas užregistruotas: {new_client}")
+        return new_client
 
     def show_clients(self):
         if not self.readerlist:
@@ -47,16 +51,11 @@ class Readers:
                 print(client)
 
     def search_client(self, keyword):
-        results = []
         for client in self.readerlist:
             if (keyword.lower() in client.surname.lower() or
                 keyword.lower() in client.email.lower() or
                 keyword in client.card_id):
-                results.append(client)
-        
-        if results:
-            print(f"Rastas(-i) skaitytojas(-ai) su '{keyword}':")
-            for client in results:
-                print(client)
-        else:
-            print(f"Nerasta skaitytojų su '{keyword}'.\n")
+                print(f"Rastas skaitytojas su '{keyword}':\n{client}")
+                return client
+        print(f"Nerasta skaitytojo su '{keyword}'.\n")
+        return None

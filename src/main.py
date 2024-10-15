@@ -1,10 +1,12 @@
-from classes.book import Book,Library # nereikia priekyje taško, nes eisim į gylį (iš main perspektyvos)
-from classes.client import Client, Readers
+from classes.book import Library # nereikia priekyje taško, nes eisim į gylį (iš main perspektyvos)
+from classes.client import Readers
+from classes.service import Service
 
 library = Library()
 library.load_books()
-client = Readers()
-client.load_clients
+readers = Readers()
+readers.load_clients()
+service = Service(library, readers)
 
 while True:
     action = input("Pasirinkite veiksmą: 1 - Pridėti knygą, 2 - Pašalinti knygą, 3 - Rodyti knygas, 4 - ieškoti knygų, 5 - Išduoti knygą, 6 - Grąžinti knygą, 0 - Išeiti:\n")
@@ -20,8 +22,9 @@ while True:
         keyword = input("Įveskite paieškos frazę (autorių arba knygos pavadinimą): ")
         library.search_books(keyword)
     elif action == "5":
-        book_name = input("Įveskite knygos pavadinimą: ")
-        Client.borrow_book(book_name, library)
+        client_keyword = input("Įveskite skaitytojo kortelės ID, pavardę arba el. paštą: ")
+        book_keyword = input("Įveskite knygos pavadinimą arba autorių: ")
+        service.borrow_book(client_keyword, book_keyword)
     elif action == "0":
         break
     else:
