@@ -1,5 +1,5 @@
 import pickle
-
+from datetime import datetime
 class Client:
 
     def __init__(self, name, surname, email):
@@ -9,8 +9,18 @@ class Client:
         self.card_id = None
         self.borrowed_books = []
 
+# Knygos išduodamos tik tam tikram laikui, jeigu knygos negrąžinamos iki išduotos datos, jos skaitomos vėluojančiomis (angl. Overdue).
+    def has_overdue_books(self):
+        now = datetime.now()
+        for borrowed in self.borrowed_books:
+            due_date = borrowed['due_date']
+            is_overdue = due_date < now
+            if is_overdue:
+                return True
+        return False
+
     def __str__(self):
-        return f"Kortelės ID: {self.card_id}. Skaitytojas: {self.name} {self.surname}, el. paštas: {self.email}\nPaimtos knygos:\n{self.borrowed_books}\n"
+        return f"Kortelės ID: {self.card_id}. Skaitytojas: {self.name} {self.surname}, el. paštas: {self.email}\n"
 
 class Readers:
     def __init__(self):
@@ -59,3 +69,22 @@ class Readers:
                 return client
         print(f"Nerasta skaitytojo su '{keyword}'.\n")
         return None
+
+# Turi būti galima peržiūrėti visas vėluojančias knygas   
+    def show_all_overdue_books(self):
+        now = datetime.now()
+        has_overdues = False
+        for client in self.readerlist:
+            overdue_books = []
+            for borrowed in client.borrowed_books:
+                if borrowed['due_date'] < now:
+                    overdue_books.append(borrowed)
+            if overdue_books:
+                has_overdues = True
+                print(f"Skaitytojas: {client.name} {client.surname}, Kortelės ID: {client.card_id}")
+                for borrowed in overdue_books:
+                    book = borrowed['book']
+                    due_date = borrowed['due_date']
+                    print(f"  - Knyga: {book.name}, Grąžinimo data: {due_date.date()}")
+        if not has_overdues:
+            print("Šiuo metu nėra vėluojančių knygų.")
