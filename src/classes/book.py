@@ -43,7 +43,7 @@ class Library:
         self.booklist.append(book)
         print("Knyga sėkmingai pridėta į biblioteką.")
 
-    def save_books(self, filename="1_tarpinis/lists/lib_books.pickle"):
+    def save_books(self, filename="src/lists/lib_books.pickle"):
         # kadangi filename = "lists/lib_books.pickle" kelias neveikia nei taip, nei ../, nei r"..." būdais, nei perėjus iš Poetry virtualios aplinkos į standartinę virtualią aplinką, ir tam sugaišau daugiau nei dvi valandas, toliau panaudotas ChatGPT pasiūlytas veikiantis sprendimas."
         # Nustatome absoliutų kelią pagal dabartinę failo vietą
         # project_root = Path(__file__).resolve().parent.parent  # Nustatome projekto šaknį
@@ -53,7 +53,7 @@ class Library:
         with open(filename, "wb") as f:
             pickle.dump(self.booklist, f)
 
-    def load_books(self, filename="1_tarpinis/lists/lib_books.pickle"):
+    def load_books(self, filename="src/lists/lib_books.pickle"):
         # Nustatome absoliutų kelią pagal dabartinę failo vietą
         # project_root = Path(__file__).resolve().parent.parent  # Nustatome projekto šaknį
         # filepath = project_root / "lists" / filename  # Sukuriame absoliutų kelią
