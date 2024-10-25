@@ -9,6 +9,10 @@ __pycache__/
 # task file
 uzduotis.txt
 
+# Pickle files
+src/lists/lib_books.pickle
+src/lists/lib_clients.pickle
+
 # Distribution / packaging
 .Python
 build/
