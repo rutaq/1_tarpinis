@@ -3,7 +3,7 @@ from classes.client import Readers
 from classes.service import Service
 
 library = Library()
-library.load_books()
+# library.load_books()
 readers = Readers()
 readers.load_clients()
 service = Service(library, readers)
@@ -12,10 +12,8 @@ while True:
     action = input("Pasirinkite veiksmą: 1 - Pridėti knygą, 2 - Pašalinti knygą, 3 - Rodyti knygas, 4 - ieškoti knygų, 5 - Išduoti knygą, 6 - Grąžinti knygą, 7 - Peržiūrėti vėluojamas atiduoti knygas, 0 - Išeiti:\n")
     if action == "1":
         library.add_book()
-        library.save_books()
     elif action == "2":
         library.remove_book()
-        library.save_books()
     elif action == "3":
         library.show_books()
     elif action == "4":

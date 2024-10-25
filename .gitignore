@@ -13,6 +13,10 @@ uzduotis.txt
 src/lists/lib_books.pickle
 src/lists/lib_clients.pickle
 
+#DB files
+src/lists/lib_books.db
+src/lists/lib_clients.db
+
 # Distribution / packaging
 .Python
 build/
