@@ -116,23 +116,15 @@ class Library:
 
     # Turi būti galima peržiūrėti visas bibliotekos knygas
     def show_books(self):
-        if not self.booklist:
-            print("Bibliotekoje šiuo metu nėra knygų.")
-        else:
-            # table_len = 108
-            # col_width = table_len/6
-            # formatavimas = f"|{{st1:^{col_width}}}|{{st2:^{col_width}}}|{{st3:^{col_width}}}|{{st4:^{col_width}}}|{{st5:^{col_width}}}|{{st6:^{col_width}}}|"
-            # st1, st2,st3,st4,st5,st6 = "Autorius","Pavadinimas","Leidimo metai","Žanras", "ISBN/Bibliotekos nr.","Kiekis"
-            # print("-" * table_len)
-            # print(formatavimas.format(st1=st1, st2=st2,st3=st3,st4=st4,st5=st5,st6=st6))
-            # print("-" * table_len)
-            # for book in self.booklist:
-            #     st1, st2, st3, st4, st5, st6 = (str(book.author), str(book.name), str(book.year), str(book.genre), str(book.isbn), str(book.n))
-            # print(formatavimas.format(st1=st1, st2=st2, st3=st3, st4=st4, st5=st5, st6=st6))
-            # print("-" * table_len)
-            print("BIBLIOTEKOJE ESANČIŲ KNYGŲ SĄRAŠAS")
-            for book in self.booklist:
-                print(book)
+        # if not self.booklist:
+        #     print("Bibliotekoje šiuo metu nėra knygų.")
+        # else:
+        print("BIBLIOTEKOJE ESANČIŲ KNYGŲ SĄRAŠAS")
+        with conn:
+            cursor.execute("SELECT * from Books")
+            list = cursor.fetchall()
+            for x in list:
+                print(x)
     
     # Turėtų būti galimybė ieškoti knygų bibliotekoje, pagal knygos pavadinimą arba autorių.
     def search_books(self, keyword):
